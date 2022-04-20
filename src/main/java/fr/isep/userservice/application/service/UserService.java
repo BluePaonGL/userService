@@ -11,6 +11,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -45,17 +46,14 @@ public class UserService implements UserServicePort {
         try {
             String location = (String) response.getHeaders().get("Location").get(0);
             String keycloakId = location.split("users/")[1];
+
+            user.setKeycloak_id(keycloakId);
+            this.userRepository.save(user);
         } catch (NullPointerException e) {
             log.info("L'utilisateur existe déjà");
         }
 
-
         return user;
-    }
-
-    @Override
-    public void addRoleToUser(String username, String roleName) {
-        //TODO
     }
 
     @Override
@@ -64,8 +62,8 @@ public class UserService implements UserServicePort {
     }
 
     @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public Page<User> getUsers() {
+        return null;
     }
 
 
