@@ -19,8 +19,11 @@ public class User {
     private Long id;
     private String keycloak_id;
 
+    @Column(unique = true)
     private String username;
     private Integer student_id;
+
+    @Column(unique = true)
     private String email;
     private String first_name;
     private String last_name;

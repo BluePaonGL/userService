@@ -44,4 +44,5 @@ public class KeycloakWebSecurityConfigurer extends KeycloakWebSecurityConfigurer
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
+
 }

@@ -45,9 +45,13 @@ public class UserService implements UserServicePort {
         try {
             String location = (String) response.getHeaders().get("Location").get(0);
             String keycloakId = location.split("users/")[1];
+
+            user.setKeycloak_id(keycloakId);
+            this.userRepository.save(user);
         } catch (NullPointerException e) {
             log.info("L'utilisateur existe déjà");
         }
+
 
 
         return user;
