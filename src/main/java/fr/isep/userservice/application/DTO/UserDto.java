@@ -1,5 +1,6 @@
 package fr.isep.userservice.application.DTO;
 
+import fr.isep.userservice.domain.model.enums.LanguageEnum;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -26,4 +27,5 @@ public class UserDto implements Serializable {
     private final String last_name;
     private final String profile_picture;
     private final String device_token;
+    private final LanguageEnum language;
 }
