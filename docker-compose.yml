@@ -36,8 +36,9 @@ services:
       - web
 
   keycloak:
-    image:  quay.io/keycloak/keycloak:legacy
+    image:  quay.io/keycloak/keycloak
     container_name: keycloak
+    command: start-dev
     ports:
       - "8080:8080"
     environment:
@@ -47,8 +48,8 @@ services:
       DB_USER: keycloak
       DB_SCHEMA: public
       DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
     networks:
       - web
 
