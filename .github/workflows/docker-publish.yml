@@ -13,7 +13,7 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
-  IMAGE_NAME: friendly_meme
+  IMAGE_NAME: user-service
 
 jobs:
   push:
