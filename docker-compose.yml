@@ -1,0 +1,61 @@
+version: "3"
+services:
+  postgres-db:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    restart: always
+    env_file:
+      - .env
+    container_name: postgres-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - web
+
+  postgres-keycloak:
+    image: postgres:latest
+    container_name: postgres-keycloak
+    volumes:
+      - pgdata-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    networks:
+      - web
+
+  user-service:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: user-service
+    depends_on:
+      - postgres-db
+    networks:
+      - web
+
+  keycloak:
+    image:  quay.io/keycloak/keycloak
+    container_name: keycloak
+    command: start-dev
+    ports:
+      - "8080:8080"
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres-keycloak
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - web
+
+volumes:
+  pgdata:
+  pgdata-keycloak:
+
+networks:
+  web:
