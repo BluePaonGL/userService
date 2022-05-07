@@ -61,8 +61,8 @@ public class UserService implements UserServicePort {
     }
 
     @Override
-    public Page<User> getUsers() {
-        return null;
+    public List<User> getUsers() {
+        return this.userRepository.findAll();
     }
 
 

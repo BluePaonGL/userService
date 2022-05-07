@@ -5,24 +5,34 @@ import fr.isep.userservice.domain.model.User;
 import fr.isep.userservice.application.port.UserServicePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/user")
 @Slf4j
 @Validated
 public class UserController {
 
     private final UserServicePort userServicePort;
 
-    @PostMapping("/user/create")
+    @RolesAllowed("ADMIN")
+    @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(this.userServicePort.saveUser(userDto));
+    }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping()
+    public ResponseEntity<List<User>> getAllUser() {
+        return new ResponseEntity<>(this.userServicePort.getUsers(), HttpStatus.OK);
     }
 
 }

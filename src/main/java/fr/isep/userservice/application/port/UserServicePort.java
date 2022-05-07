@@ -11,5 +11,5 @@ public interface UserServicePort {
     User getUser(String username);
 
 
-    Page<User> getUsers();
+    List<User> getUsers();
 }
