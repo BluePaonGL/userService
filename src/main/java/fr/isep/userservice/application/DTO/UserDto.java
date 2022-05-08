@@ -18,10 +18,15 @@ public class UserDto implements Serializable {
     @NotNull
     @NotEmpty
     private final String username;
+    @NotNull
+    @NotEmpty
     private final String password;
     private final Integer student_id;
+    private final String keycloak_id;
 
     @Email
+    @NotNull
+    @NotEmpty
     private final String email;
     private final String first_name;
     private final String last_name;

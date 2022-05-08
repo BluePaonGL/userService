@@ -28,7 +28,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserWithPassword'
         required: true
       responses:
         '201':
@@ -51,6 +51,41 @@ security:
   - keycloak: []
 
 components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+        - email
+      properties:
+        keycloak_id:
+          type: string
+          example: a3c443b3-5b9d-4701-8d94-f56549d2fa3f
+        username:
+          type: string
+          example: Moeve
+        student_id:
+          type: integer
+          format: int16
+          example: 60125
+        email:
+          type: string
+          example: arthur.cann@eleve.isep.fr
+        first_name:
+          type: string
+          example: Arthur
+    UserWithPassword:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          required:
+            - password
+          properties:
+            password:
+              type: string
+
+
+
   securitySchemes:
     keycloak:
       openIdConnectUrl: 'keycloak.cubetech-app.fr'
