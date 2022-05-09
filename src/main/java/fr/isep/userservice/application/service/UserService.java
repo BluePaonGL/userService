@@ -50,7 +50,7 @@ public class UserService implements UserServicePort {
             user.setKeycloak_id(keycloakId);
             this.userRepository.save(user);
         } catch (NullPointerException e) {
-            log.info("L'utilisateur existe déjà");
+            log.info("This user already exist in Keycloak");
         }
         return user;
     }
@@ -61,8 +61,8 @@ public class UserService implements UserServicePort {
     }
 
     @Override
-    public Page<User> getUsers() {
-        return null;
+    public List<User> getUsers() {
+        return this.userRepository.findAll();
     }
 
 

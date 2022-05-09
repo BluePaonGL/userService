@@ -1,0 +1,92 @@
+openapi: 3.0.2
+info:
+  title: Swagger UserService - OpenApi 3.0
+  description: |
+    This is the documentation for the UserService API of the IsHelp application.
+    We tried a microservices approach and this Service serves as the link between our frontends and Keycloak.
+    This API is designed and documented following the OpenApi specifications.
+  contact:
+    email: arthur.cann@eleve.isep.fr
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+tags:
+  - name: User
+    description: Every operation about Users
+  - name: Role
+    description: Everything about Role and Authorization handling
+paths:
+  /user:
+    post:
+      tags:
+        - User
+      summary: Create a new user
+      description: Create a new user and save it in Keycloak and Postgres. Password is not save in the database, only in Keycloak
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserWithPassword'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid request body
+    get:
+      tags:
+        - User
+      summary: Get all users
+      responses:
+        '200':
+          description: OK
+
+security:
+  - keycloak: []
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+        - email
+      properties:
+        keycloak_id:
+          type: string
+          example: a3c443b3-5b9d-4701-8d94-f56549d2fa3f
+        username:
+          type: string
+          example: Moeve
+        student_id:
+          type: integer
+          format: int16
+          example: 60125
+        email:
+          type: string
+          example: arthur.cann@eleve.isep.fr
+        first_name:
+          type: string
+          example: Arthur
+    UserWithPassword:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          required:
+            - password
+          properties:
+            password:
+              type: string
+
+
+
+  securitySchemes:
+    keycloak:
+      openIdConnectUrl: 'keycloak.cubetech-app.fr'
+      type: openIdConnect
