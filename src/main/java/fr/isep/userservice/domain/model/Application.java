@@ -1,16 +1,21 @@
 package fr.isep.userservice.domain.model;
 
-import fr.isep.userservice.domain.model.enums.ApplicationStatusEnum;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long applicationId;
+    private Long applicationId;
 
     private String status;
     private String object;
@@ -20,4 +25,17 @@ public class Application {
 
     @ManyToOne(targetEntity = User.class)
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Application that = (Application) o;
+        return applicationId != null && Objects.equals(applicationId, that.applicationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

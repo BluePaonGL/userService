@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="`user`")
 public class User {
     @Id
@@ -30,5 +34,19 @@ public class User {
     private LanguageEnum language;
 
     @OneToMany(targetEntity = Application.class)
+    @ToString.Exclude
     private List<Application> applications;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return userId != null && Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
