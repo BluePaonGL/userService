@@ -39,16 +39,31 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           description: Invalid request body
+      security:
+        - keycloak:
+            - manage-users
     get:
       tags:
         - User
-      summary: Get all users
+      parameters:
+        - name: userId
+          in: path
+          description: userId of the user you want to get
+          required: true
+          schema:
+            type: string
+            example: 24
+
       responses:
         '200':
-          description: OK
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 
-security:
-  - keycloak: []
+
+
 
 components:
   schemas:
@@ -74,6 +89,21 @@ components:
         first_name:
           type: string
           example: Arthur
+        last_name:
+          type: string
+          example: Cann
+        profile_picture:
+          type: string
+          example: path/to/profile/picture
+        device_token:
+          type: string
+          example: APA91bHLmrw120zwkLloO4xiqQwiFPU6fFDTQiTPZjvJdDsehm-saXj2o-FFa8bsK5k-My0pwb1Os1LqQYwuytYksSShyg-n7ff3YJjP4-W5pZetQUWUhIuCDig9CnUjBTm5QAFobTvs
+        language:
+          type: string
+          description: default language of the user
+          enum:
+            - FR
+            - EN
     UserWithPassword:
       allOf:
         - $ref: '#/components/schemas/User'
