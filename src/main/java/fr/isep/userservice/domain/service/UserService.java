@@ -1,9 +1,9 @@
-package fr.isep.userservice.application.service;
+package fr.isep.userservice.domain.service;
 
 import fr.isep.userservice.application.DTO.UserDto;
 import fr.isep.userservice.domain.model.User;
+import fr.isep.userservice.domain.port.UserRepositoryPort;
 import fr.isep.userservice.application.port.UserServicePort;
-import fr.isep.userservice.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
@@ -11,7 +11,6 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,7 +24,7 @@ import java.util.List;
 @Slf4j
 public class UserService implements UserServicePort {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryPort userRepositoryPort;
     private final Keycloak keycloak;
     private final ModelMapper modelMapper;
 
@@ -33,7 +32,7 @@ public class UserService implements UserServicePort {
     private String REALM;
 
     @Override
-    public User saveUser(UserDto userDto) {
+    public fr.isep.userservice.domain.model.User saveUser(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         CredentialRepresentation password = preparePasswordRepresentation(userDto.getPassword());
         UserRepresentation userRepresentation = prepareUserRepresentation(user, password);
@@ -48,7 +47,7 @@ public class UserService implements UserServicePort {
             String keycloakId = location.split("users/")[1];
 
             user.setKeycloak_id(keycloakId);
-            this.userRepository.save(user);
+            this.userRepositoryPort.save(user);
         } catch (NullPointerException e) {
             log.info("This user already exist in Keycloak");
         }
@@ -57,12 +56,12 @@ public class UserService implements UserServicePort {
 
     @Override
     public User getUser(String username) {
-        return userRepository.findByUsername(username);
+        return userRepositoryPort.findByUsername(username);
     }
 
     @Override
     public List<User> getUsers() {
-        return this.userRepository.findAll();
+        return this.userRepositoryPort.findAll();
     }
 
 

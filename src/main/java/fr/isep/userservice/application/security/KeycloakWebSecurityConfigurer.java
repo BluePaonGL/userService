@@ -26,7 +26,10 @@ public class KeycloakWebSecurityConfigurer extends KeycloakWebSecurityConfigurer
                 .anyRequest()
                 .permitAll();
         http.csrf().disable();
+        http.cors();
     }
+
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {

@@ -5,6 +5,7 @@ import fr.isep.userservice.domain.model.User;
 import fr.isep.userservice.application.port.UserServicePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +24,6 @@ public class UserController {
 
     private final UserServicePort userServicePort;
 
-    @RolesAllowed("ADMIN")
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(this.userServicePort.saveUser(userDto));
@@ -34,5 +34,6 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUser() {
         return new ResponseEntity<>(this.userServicePort.getUsers(), HttpStatus.OK);
     }
+
 
 }
