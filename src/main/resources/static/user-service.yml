@@ -45,14 +45,14 @@ paths:
     get:
       tags:
         - User
-      parameters:
-        - name: userId
-          in: path
-          description: userId of the user you want to get
-          required: true
-          schema:
-            type: string
-            example: 24
+      summary: Get all user paged
+      description: Get users paged with the optional criteria you specified in the request
+      operationId: pageAllUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageUserCriteria'
 
       responses:
         '200':
@@ -61,6 +61,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid request body
+
+  /user/{userId}:
+    
 
 
 
@@ -113,6 +118,13 @@ components:
           properties:
             password:
               type: string
+
+    PageUserCriteria:
+      type: object
+      properties:
+        keycloak_id:
+          type: string
+          example: a3c443b3-5b9d-4701-8d94-f56549d2fa3f
 
 
 
