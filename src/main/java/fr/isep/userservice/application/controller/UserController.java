@@ -1,6 +1,7 @@
 package fr.isep.userservice.application.controller;
 
 import fr.isep.userservice.application.DTO.UserDto;
+import fr.isep.userservice.domain.model.Application;
 import fr.isep.userservice.domain.model.User;
 import fr.isep.userservice.application.port.UserServicePort;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,33 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUser() {
         return new ResponseEntity<>(this.userServicePort.getUsers(), HttpStatus.OK);
     }
+
+    @GetMapping("/application/{applicationId}")
+    public ResponseEntity<Application> getApplicationById() {
+
+    }
+
+    @GetMapping("/application/{userId}")
+    public ResponseEntity<List<Application>> getApplicationByUser() {
+
+    }
+
+    @PostMapping("/application")
+    public ResponseEntity<Application> createApplication() {
+
+    }
+
+    @PatchMapping("/application/status")
+    public ResponseEntity<Application> changeApplicationStatus() {
+
+    }
+
+    @PatchMapping("/application/review")
+    public ResponseEntity<Application> postApplicationReview() {
+
+    }
+
+
 
 
 }

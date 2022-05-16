@@ -18,13 +18,15 @@ public class ApplicationDao {
     private String applicationId;
 
     private String status;
+    private String review_comment;
+
     private String object;
     private String motivations;
     private String resume;
     private String contact;
 
     @ManyToOne(targetEntity = UserDao.class)
-    private fr.isep.userservice.infrastructure.adatpter_repository_db.DAO.UserDao user;
+    private UserDao user;
 
     @Override
     public boolean equals(Object o) {
