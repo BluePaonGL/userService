@@ -1,7 +1,9 @@
 package fr.isep.userservice.infrastructure.adatpter_repository_db.DAO;
 
+import fr.isep.userservice.domain.model.enums.ApplicationStatusEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,17 +16,21 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ApplicationDao {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String applicationId;
 
-    private String status;
+    @Enumerated(value = EnumType.STRING)
+    private ApplicationStatusEnum status;
+    private String review_comment;
+
     private String object;
     private String motivations;
     private String resume;
     private String contact;
 
     @ManyToOne(targetEntity = UserDao.class)
-    private fr.isep.userservice.infrastructure.adatpter_repository_db.DAO.UserDao user;
+    private UserDao user;
 
     @Override
     public boolean equals(Object o) {

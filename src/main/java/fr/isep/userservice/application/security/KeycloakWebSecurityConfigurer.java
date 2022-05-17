@@ -1,8 +1,5 @@
 package fr.isep.userservice.application.security;
 
-import org.keycloak.adapters.KeycloakConfigResolver;
-import org.keycloak.adapters.jetty.core.AbstractKeycloakJettyAuthenticator;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;

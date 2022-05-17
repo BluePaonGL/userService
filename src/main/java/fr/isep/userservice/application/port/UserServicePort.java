@@ -6,8 +6,8 @@ import fr.isep.userservice.domain.model.User;
 import java.util.List;
 
 public interface UserServicePort {
-    fr.isep.userservice.domain.model.User saveUser(UserDto userDto);
-    fr.isep.userservice.domain.model.User getUser(String username);
+    User saveUser(UserDto userDto);
+    User getUser(String username);
 
 
     List<User> getUsers();

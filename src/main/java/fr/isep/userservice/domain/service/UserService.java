@@ -20,7 +20,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class UserService implements UserServicePort {
 
@@ -37,12 +36,11 @@ public class UserService implements UserServicePort {
         CredentialRepresentation password = preparePasswordRepresentation(userDto.getPassword());
         UserRepresentation userRepresentation = prepareUserRepresentation(user, password);
 
-        Response response = keycloak
+
+        try (Response response = keycloak
                 .realm(REALM)
                 .users()
-                .create(userRepresentation);
-
-        try {
+                .create(userRepresentation)) {
             String location = (String) response.getHeaders().get("Location").get(0);
             String keycloakId = location.split("users/")[1];
 

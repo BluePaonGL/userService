@@ -16,5 +16,4 @@ public class User {
     private String profile_picture;
     private String device_token;
     private LanguageEnum language;
-
 }
