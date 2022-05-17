@@ -1,5 +1,6 @@
 package fr.isep.userservice.domain.model;
 
+import fr.isep.userservice.domain.model.enums.ApplicationStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Application {
     private String applicationId;
-    private String status;
+    private ApplicationStatusEnum status;
     private String object;
     private String motivations;
     private String resume;

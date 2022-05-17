@@ -26,7 +26,7 @@ public class ApplicationRepositoryAdapter implements ApplicationRepositoryPort {
 
     @Override
     public Application findById(String applicationId) {
-        return null;
+        return modelMapper.map(this.applicationRepository.findByApplicationId(applicationId), Application.class);
     }
 
     @Override
@@ -40,7 +40,8 @@ public class ApplicationRepositoryAdapter implements ApplicationRepositoryPort {
 
     @Override
     public Application saveApplication(Application application) {
-        return null;
+        ApplicationDao applicationDao = modelMapper.map(application, ApplicationDao.class);
+        return modelMapper.map(this.applicationRepository.save(applicationDao), Application.class);
     }
 
     @Override

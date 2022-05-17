@@ -1,5 +1,6 @@
 package fr.isep.userservice.infrastructure.adatpter_repository_db.helper;
 
+import fr.isep.userservice.domain.model.enums.ApplicationStatusEnum;
 import fr.isep.userservice.infrastructure.adatpter_repository_db.DAO.ApplicationDao;
 import fr.isep.userservice.infrastructure.adatpter_repository_db.DAO.ApplicationDao_;
 import fr.isep.userservice.infrastructure.adatpter_repository_db.DAO.UserDao;
@@ -25,7 +26,7 @@ public class ApplicationRepositorySpecification {
         };
     }
 
-    public static Specification<ApplicationDao> statusEquals(String status) {
+    public static Specification<ApplicationDao> statusEquals(ApplicationStatusEnum status) {
 
         return (root, query, criteriaBuilder) -> {
             if(status != null) {
