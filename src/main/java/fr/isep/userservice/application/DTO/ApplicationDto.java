@@ -23,5 +23,6 @@ public class ApplicationDto implements Serializable {
     @NotNull
     @NotEmpty
     private final String contact;
+    //TODO Ajouter userId
 
 }

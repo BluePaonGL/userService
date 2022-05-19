@@ -54,7 +54,7 @@ paths:
           required: true
           schema:
             type: string
-            example: 402881d480d2bb040180d2bc36930000
+            example: 253778f5-3792-4630-a9dd-a71b4d2b0845
 
       responses:
         '200':
@@ -65,19 +65,128 @@ paths:
                 $ref: '#/components/schemas/User'
 
   /user/{userId}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          description: keycloakId of the user you're trying to get
+          required: true
+          schema:
+            type: string
+            example: 253778f5-3792-4630-a9dd-a71b4d2b0845
+
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /user/list:
+    get:
+      tags:
+        - User
+      requestBody:
+        description: List of IDs for the Users you want to retrieve
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                example: 253778f5-3792-4630-a9dd-a71b4d2b0845
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
 
   /application:
     get:
       tags:
         - Application
       parameters:
-        - name: userId
+        - name: status
           in: query
-          description: userId of the user you want to search Application's
+          description: Status of the application you're looking for
           required: false
           schema:
             type: string
-            example: 402881d480d2bb040180d2bc36930000
+            enum:
+              - SUBMITTED
+              - IN_REVIEW
+              - ACCEPTED
+              - REFUSED
+        - name: userId
+          in: query
+          description: userId of the user attached to the application you're looking for
+          required: false
+          schema:
+            type: string
+            example: 253778f5-3792-4630-a9dd-a71b4d2b0845
+        - name: pageNumber
+          in: query
+          description: page number. Used for pagination.
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: pageSize
+          in: query
+          description: page size. Number of element in the page. Used for pagination.
+          required: false
+          schema:
+            type: integer
+            default: 20
+
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+    post:
+      tags:
+        - Application
+      description: You can register new Application using this endpoint.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplication'
+      responses:
+        '204':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+
+  /application/{applicationId}:
+    get:
+      tags:
+        - Application
+      parameters:
+        - name: applicationId
+          in: path
+          description: applicationId of the application you want to retrieve
+          required: true
+          schema:
+            type: string
+            example: 253778f5-3792-4630-a9dd-a71b4d2b0845
       responses:
         '200':
           description: Successful Operation
@@ -96,7 +205,7 @@ components:
         - username
         - email
       properties:
-        keycloak_id:
+        userId:
           type: string
           example: a3c443b3-5b9d-4701-8d94-f56549d2fa3f
         username:
@@ -117,7 +226,7 @@ components:
           example: Cann
         profile_picture:
           type: string
-          example: path/to/profile/picture
+          example: path/to/profile/picture.png
         device_token:
           type: string
           example: APA91bHLmrw120zwkLloO4xiqQwiFPU6fFDTQiTPZjvJdDsehm-saXj2o-FFa8bsK5k-My0pwb1Os1LqQYwuytYksSShyg-n7ff3YJjP4-W5pZetQUWUhIuCDig9CnUjBTm5QAFobTvs
@@ -142,7 +251,7 @@ components:
       properties:
         applicationId:
           type: string
-          example: 402881d480d2bb040180d2bc36930000
+          example: 253778f5-3792-4630-a9dd-a71b4d2b0845
         status:
           type: string
           description: current status of the application
@@ -153,7 +262,23 @@ components:
             - REFUSED
         object:
           type: string
-          
+
+    CreateApplication:
+      type: object
+      properties:
+        object:
+          type: string
+          example: Example object
+        motivations:
+          type: string
+          example: Example motivations
+        resume:
+          type: string
+          example: Example resume
+        contact:
+          type: string
+          example: Example contact
+
 
 
   securitySchemes:

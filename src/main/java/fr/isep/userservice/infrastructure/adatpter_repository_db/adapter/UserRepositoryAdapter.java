@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -52,6 +52,14 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     @Override
     public List<User> findAll() {
         return null;
+    }
+
+    @Override
+    public List<User> getListOfUsersById(List<String> listOfId) {
+        List<UserDao> userDaoList = this.userRepository.findUserDaoByUserIdIn(listOfId);
+        return userDaoList.stream()
+                .map(userDao -> this.modelMapper.map(userDao, User.class))
+                .collect(Collectors.toList());
     }
 
     @Override

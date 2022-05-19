@@ -10,6 +10,7 @@ public interface UserServicePort {
     User getUser(String username);
     User getUserById(String userId);
 
+    List<User> getListOfUsersById(List<String> listOfId);
 
     List<User> getUsers();
 }

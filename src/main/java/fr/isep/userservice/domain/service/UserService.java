@@ -63,6 +63,11 @@ public class UserService implements UserServicePort {
     }
 
     @Override
+    public List<User> getListOfUsersById(List<String> listOfId) {
+        return this.userRepositoryPort.getListOfUsersById(listOfId);
+    }
+
+    @Override
     public List<User> getUsers() {
         return this.userRepositoryPort.findAll();
     }

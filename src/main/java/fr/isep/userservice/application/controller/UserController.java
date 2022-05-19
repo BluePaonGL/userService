@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,10 @@ public class UserController {
         return new ResponseEntity<>(this.userServicePort.getUserById(userId), HttpStatus.OK);
     }
 
-
+    @GetMapping("/list")
+    public ResponseEntity<List<User>> getListOfUserByListOfId(@RequestBody @NotNull List<String> idList) {
+        return new ResponseEntity<>(this.userServicePort.getListOfUsersById(idList), HttpStatus.OK);
+    }
 
 
 
