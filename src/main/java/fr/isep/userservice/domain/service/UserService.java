@@ -31,7 +31,7 @@ public class UserService implements UserServicePort {
     private String REALM;
 
     @Override
-    public fr.isep.userservice.domain.model.User saveUser(UserDto userDto) {
+    public User saveUser(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         CredentialRepresentation password = preparePasswordRepresentation(userDto.getPassword());
         UserRepresentation userRepresentation = prepareUserRepresentation(user, password);
@@ -44,17 +44,22 @@ public class UserService implements UserServicePort {
             String location = (String) response.getHeaders().get("Location").get(0);
             String keycloakId = location.split("users/")[1];
 
-            user.setKeycloak_id(keycloakId);
-            this.userRepositoryPort.save(user);
+            user.setUserId(keycloakId);
+            return this.userRepositoryPort.save(user);
         } catch (NullPointerException e) {
             log.info("This user already exist in Keycloak");
         }
-        return user;
+        return null;
     }
 
     @Override
     public User getUser(String username) {
         return userRepositoryPort.findByUsername(username);
+    }
+
+    @Override
+    public User getUserById(String userId) {
+        return userRepositoryPort.findById(userId);
     }
 
     @Override

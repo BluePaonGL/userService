@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserServicePort {
     User saveUser(UserDto userDto);
     User getUser(String username);
+    User getUserById(String userId);
 
 
     List<User> getUsers();

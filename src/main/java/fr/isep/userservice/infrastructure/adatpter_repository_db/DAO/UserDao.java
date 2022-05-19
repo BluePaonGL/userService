@@ -17,9 +17,7 @@ import java.util.Objects;
 @Table(name="`user`")
 public class UserDao {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String userId;
-    private String keycloak_id;
 
     @Column(unique = true)
     private String username;

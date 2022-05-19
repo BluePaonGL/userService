@@ -25,9 +25,9 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Override
     public User findById(String userId) {
-        Optional<UserDao> userDaoOptional = this.userRepository.findById(Long.valueOf(userId));
+        UserDao userDaoOptional = this.userRepository.findByUserId(userId);
         try {
-            return modelMapper.map(userDaoOptional.get(), User.class);
+            return modelMapper.map(userDaoOptional, User.class);
         } catch (NoSuchElementException exception) {
             throw new NoSuchElementException("This user does not exist in the database", exception);
         }
@@ -45,7 +45,8 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Override
     public User save(User user) {
-        return null;
+        UserDao userDao = modelMapper.map(user, UserDao.class);
+        return modelMapper.map(this.userRepository.save(userDao), User.class);
     }
 
     @Override

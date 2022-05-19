@@ -16,6 +16,8 @@ tags:
     description: Every operation about Users
   - name: Role
     description: Everything about Role and Authorization handling
+  - name: Application
+    description: Everything related to Application for joining IsHelp association.
 paths:
   /user:
     post:
@@ -52,7 +54,7 @@ paths:
           required: true
           schema:
             type: string
-            example: 24
+            example: 402881d480d2bb040180d2bc36930000
 
       responses:
         '200':
@@ -62,6 +64,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
 
+  /user/{userId}:
+
+  /application:
+    get:
+      tags:
+        - Application
+      parameters:
+        - name: userId
+          in: query
+          description: userId of the user you want to search Application's
+          required: false
+          schema:
+            type: string
+            example: 402881d480d2bb040180d2bc36930000
+      responses:
+        '200':
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
 
 
 
@@ -113,7 +136,24 @@ components:
           properties:
             password:
               type: string
-
+    Application:
+      type: object
+      required:
+      properties:
+        applicationId:
+          type: string
+          example: 402881d480d2bb040180d2bc36930000
+        status:
+          type: string
+          description: current status of the application
+          enum:
+            - SUBMITTED
+            - IN_REVIEW
+            - ACCEPTED
+            - REFUSED
+        object:
+          type: string
+          
 
 
   securitySchemes:

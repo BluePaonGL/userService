@@ -1,10 +1,12 @@
 package fr.isep.userservice.application.controller;
 
 import fr.isep.userservice.application.DTO.UserDto;
+import fr.isep.userservice.application.DTO.UserWithoutPasswordDto;
 import fr.isep.userservice.domain.model.User;
 import fr.isep.userservice.application.port.UserServicePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,7 @@ import java.util.List;
 public class UserController {
 
     private final UserServicePort userServicePort;
+    private final ModelMapper modelMapper;
 
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {
@@ -32,6 +35,11 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<List<User>> getAllUser() {
         return new ResponseEntity<>(this.userServicePort.getUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+        return new ResponseEntity<>(this.userServicePort.getUserById(userId), HttpStatus.OK);
     }
 
 

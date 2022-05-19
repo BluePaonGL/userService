@@ -7,7 +7,7 @@ import lombok.Getter;
 public enum ApplicationStatusEnum {
 
     SUBMITTED("submitted"),
-    IN_REVIEW("in_progress");
+    IN_REVIEW("in_review");
 
     @Getter
     private final String value;
