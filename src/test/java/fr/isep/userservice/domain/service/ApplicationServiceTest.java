@@ -31,7 +31,7 @@ class ApplicationServiceTest {
 
     @BeforeEach
     void setMockOutput() {
-        when(applicationRepositoryAdapter.findById(not(eq("123")))).thenThrow(NoSuchElementException.class);
+        when(applicationRepositoryAdapter.findById(not(eq("123")))).thenThrow(IllegalArgumentException.class);
         when(applicationRepositoryAdapter.findById("123")).thenReturn(this.getValidApplication());
     }
 
@@ -51,7 +51,7 @@ class ApplicationServiceTest {
 
     @Test
     void should_throw_NoSuchElementException_when_provided_with_invalid_id() {
-        assertThrows(NoSuchElementException.class,() -> {
+        assertThrows(IllegalArgumentException.class,() -> {
             this.applicationService.getApplicationById("234");
         });
     }

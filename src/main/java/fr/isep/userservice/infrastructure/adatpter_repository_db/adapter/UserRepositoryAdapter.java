@@ -28,8 +28,8 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
         UserDao userDaoOptional = this.userRepository.findByUserId(userId);
         try {
             return modelMapper.map(userDaoOptional, User.class);
-        } catch (NoSuchElementException exception) {
-            throw new NoSuchElementException("This user does not exist in the database", exception);
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException("This user does not exist in the database", exception);
         }
     }
 

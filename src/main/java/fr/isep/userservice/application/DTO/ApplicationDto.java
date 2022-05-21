@@ -13,6 +13,9 @@ import java.io.Serializable;
 public class ApplicationDto implements Serializable {
     @NotNull
     @NotEmpty
+    private final String userId;
+    @NotNull
+    @NotEmpty
     private final String object;
     @NotNull
     @NotEmpty
@@ -23,6 +26,6 @@ public class ApplicationDto implements Serializable {
     @NotNull
     @NotEmpty
     private final String contact;
-    //TODO Ajouter userId
+
 
 }
