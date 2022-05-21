@@ -10,11 +10,16 @@ import lombok.AllArgsConstructor;
 import org.hibernate.exception.DataException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import static fr.isep.userservice.infrastructure.adatpter_repository_db.helper.UserRepositorySpecification.usernameEquals;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @AllArgsConstructor
 @Component
@@ -40,7 +45,10 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Override
     public Page<User> pageUser(UserCriteria userCriteria) {
-        return null;
+        Pageable paging = PageRequest.of(userCriteria.getPageNumber(), userCriteria.getPageSize());
+        Specification<UserDao> specification = where(usernameEquals(userCriteria.getUsername()));
+        Page<UserDao> userDaoPage = this.userRepository.findAll(specification, paging);
+        return userDaoPage.map(userDao -> modelMapper.map(userDao, User.class));
     }
 
     @Override
@@ -51,7 +59,9 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Override
     public List<User> findAll() {
-        return null;
+        return this.userRepository.findAll()
+                .stream().map(userDao -> modelMapper.map(userDao, User.class))
+                .collect(Collectors.toList());
     }
 
     @Override
