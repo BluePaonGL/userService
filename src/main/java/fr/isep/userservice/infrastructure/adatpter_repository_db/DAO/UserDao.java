@@ -21,14 +21,14 @@ public class UserDao {
 
     @Column(unique = true)
     private String username;
-    private Integer student_id;
+    private Integer studentId;
 
     @Column(unique = true)
     private String email;
-    private String first_name;
-    private String last_name;
-    private String profile_picture;
-    private String device_token;
+    private String firstName;
+    private String lastName;
+    private String profilePicture;
+    private String deviceToken;
     private LanguageEnum language;
 
     @OneToMany(targetEntity = fr.isep.userservice.infrastructure.adatpter_repository_db.DAO.ApplicationDao.class)

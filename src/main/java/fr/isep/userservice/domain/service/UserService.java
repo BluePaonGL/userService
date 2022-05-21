@@ -1,6 +1,7 @@
 package fr.isep.userservice.domain.service;
 
 import fr.isep.userservice.application.DTO.UserDto;
+import fr.isep.userservice.domain.criteria.UserCriteria;
 import fr.isep.userservice.domain.model.User;
 import fr.isep.userservice.domain.port.UserRepositoryPort;
 import fr.isep.userservice.application.port.UserServicePort;
@@ -11,6 +12,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -60,6 +62,11 @@ public class UserService implements UserServicePort {
     @Override
     public User getUserById(String userId) {
         return userRepositoryPort.findById(userId);
+    }
+
+    @Override
+    public Page<User> pageUsers(UserCriteria userCriteria) {
+        return this.userRepositoryPort.pageUser(userCriteria);
     }
 
     @Override
