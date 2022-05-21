@@ -46,7 +46,7 @@ public class ApplicationController {
         return new ResponseEntity<>(this.applicationServicePort.getApplicationById(applicationId), HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<Application> createApplication(@Valid @RequestBody ApplicationDto createApplicationDTO) {
         return new ResponseEntity<>(this.applicationServicePort.createApplication(createApplicationDTO), HttpStatus.CREATED);
     }

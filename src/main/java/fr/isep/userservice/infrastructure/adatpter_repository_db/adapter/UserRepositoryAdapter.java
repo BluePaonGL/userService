@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -28,8 +28,8 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
         UserDao userDaoOptional = this.userRepository.findByUserId(userId);
         try {
             return modelMapper.map(userDaoOptional, User.class);
-        } catch (NoSuchElementException exception) {
-            throw new NoSuchElementException("This user does not exist in the database", exception);
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException("This user does not exist in the database", exception);
         }
     }
 
@@ -52,6 +52,14 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     @Override
     public List<User> findAll() {
         return null;
+    }
+
+    @Override
+    public List<User> getListOfUsersById(List<String> listOfId) {
+        List<UserDao> userDaoList = this.userRepository.findUserDaoByUserIdIn(listOfId);
+        return userDaoList.stream()
+                .map(userDao -> this.modelMapper.map(userDao, User.class))
+                .collect(Collectors.toList());
     }
 
     @Override
