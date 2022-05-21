@@ -60,7 +60,7 @@ public class UserController {
         return new ResponseEntity<>(this.userServicePort.getUserById(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity<List<User>> getListOfUserByListOfId(@RequestBody @NotNull List<String> idList) {
         return new ResponseEntity<>(this.userServicePort.getListOfUsersById(idList), HttpStatus.OK);
     }
