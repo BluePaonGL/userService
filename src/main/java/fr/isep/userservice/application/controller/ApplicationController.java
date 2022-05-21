@@ -24,7 +24,7 @@ public class ApplicationController {
 
     private final ApplicationServicePort applicationServicePort;
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<Page<Application>> pageApplicationByUser(
             @RequestParam(required = false) ApplicationStatusEnum status,
             @RequestParam(required = false) String userId,
