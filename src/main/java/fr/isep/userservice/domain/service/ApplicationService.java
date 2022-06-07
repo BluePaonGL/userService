@@ -4,7 +4,10 @@ import fr.isep.userservice.application.DTO.ApplicationDto;
 import fr.isep.userservice.application.port.ApplicationServicePort;
 import fr.isep.userservice.domain.criteria.ApplicationCriteria;
 import fr.isep.userservice.domain.model.Application;
+import fr.isep.userservice.domain.model.User;
 import fr.isep.userservice.domain.port.ApplicationRepositoryPort;
+import fr.isep.userservice.domain.port.UserRepositoryPort;
+import fr.isep.userservice.infrastructure.adatpter_repository_db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationService implements ApplicationServicePort {
 
     private final ApplicationRepositoryPort applicationRepositoryPort;
+    private final UserRepositoryPort userRepositoryPort;
     private final ModelMapper modelMapper;
 
     @Override
@@ -32,6 +36,8 @@ public class ApplicationService implements ApplicationServicePort {
     @Override
     public Application createApplication(ApplicationDto applicationDTO) {
         Application application = this.modelMapper.map(applicationDTO, Application.class);
+        User user = this.userRepositoryPort.findById(applicationDTO.getUserId());
+        application.setUser(user);
         return this.applicationRepositoryPort.saveApplication(application);
     }
 
