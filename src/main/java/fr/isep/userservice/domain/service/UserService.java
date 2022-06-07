@@ -91,6 +91,9 @@ public class UserService implements UserServicePort {
     private UserRepresentation prepareUserRepresentation(User user, CredentialRepresentation password) {
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername(user.getUsername());
+        userRepresentation.setEmail(user.getEmail());
+        userRepresentation.setFirstName(user.getFirstName());
+        userRepresentation.setLastName(user.getLastName());
         List<CredentialRepresentation> credentials = new ArrayList<>();
         credentials.add(password);
 
