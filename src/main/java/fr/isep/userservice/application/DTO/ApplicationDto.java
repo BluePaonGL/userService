@@ -2,7 +2,6 @@ package fr.isep.userservice.application.DTO;
 
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,9 +11,6 @@ import java.io.Serializable;
 @Data
 @Setter(value = AccessLevel.NONE)
 public class ApplicationDto implements Serializable {
-    @NotNull
-    @NotEmpty
-    private final String userId;
     @NotNull
     @NotEmpty
     private final String object;

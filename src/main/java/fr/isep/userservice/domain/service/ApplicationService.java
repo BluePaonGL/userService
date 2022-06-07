@@ -10,8 +10,12 @@ import fr.isep.userservice.domain.port.UserRepositoryPort;
 import fr.isep.userservice.infrastructure.adatpter_repository_db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,7 +40,9 @@ public class ApplicationService implements ApplicationServicePort {
     @Override
     public Application createApplication(ApplicationDto applicationDTO) {
         Application application = this.modelMapper.map(applicationDTO, Application.class);
-        User user = this.userRepositoryPort.findById(applicationDTO.getUserId());
+        KeycloakPrincipal userDetails = (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String id = userDetails.getKeycloakSecurityContext().getToken().getSubject();
+        User user = this.userRepositoryPort.findById(id);
         application.setUser(user);
         return this.applicationRepositoryPort.saveApplication(application);
     }
