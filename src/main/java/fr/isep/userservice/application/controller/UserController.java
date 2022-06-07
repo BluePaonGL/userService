@@ -27,7 +27,6 @@ import java.util.List;
 public class UserController {
 
     private final UserServicePort userServicePort;
-    private final ModelMapper modelMapper;
 
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDto userDto) {

@@ -5,6 +5,7 @@ import fr.isep.userservice.application.port.ApplicationServicePort;
 import fr.isep.userservice.domain.criteria.ApplicationCriteria;
 import fr.isep.userservice.domain.model.Application;
 import fr.isep.userservice.domain.model.User;
+import fr.isep.userservice.domain.model.enums.ApplicationStatusEnum;
 import fr.isep.userservice.domain.port.ApplicationRepositoryPort;
 import fr.isep.userservice.domain.port.UserRepositoryPort;
 import fr.isep.userservice.infrastructure.adatpter_repository_db.repository.UserRepository;
@@ -44,6 +45,7 @@ public class ApplicationService implements ApplicationServicePort {
         String id = userDetails.getKeycloakSecurityContext().getToken().getSubject();
         User user = this.userRepositoryPort.findById(id);
         application.setUser(user);
+        application.setStatus(ApplicationStatusEnum.IN_REVIEW);
         return this.applicationRepositoryPort.saveApplication(application);
     }
 
